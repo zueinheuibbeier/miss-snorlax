@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Dimah 🎀</title>
+<meta name="description" content="A personal birthday page made with love, just for Dimah.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,600&family=Nunito:wght@400;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<style>
+/* ─────────────────────────────────────────
+   ROOT TOKENS
+───────────────────────────────────────── */
+:root {
+  --cream:      #FBF4EE;
+  --paper:      #FFFCF8;
+  --blush:      #F2C4CE;
+  --rose:       #D98A9B;
+  --rose-deep:  #B05A6E;
+  --sand:       #EDE0CF;
+  --gold:       #C9A15A;
+  --plum:       #3E2D32;
+  --plum-soft:  #7A606A;
+  --sage:       #A8B5A0;
+}
+
+/* ─────────────────────────────────────────
+   RESET + BASE
+───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--plum);
+  font-family: 'Nunito', sans-serif;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+::selection { background: var(--blush); color: var(--rose-deep); }
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ─────────────────────────────────────────
+   BACKGROUND TEXTURE
+───────────────────────────────────────── */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(209,138,155,.18) 1px, transparent 1px);
+  background-size: 26px 26px;
+  pointer-events: none;
+}
+section { position: relative; z-index: 1; }
+
+/* ─────────────────────────────────────────
+   FLOATING PETALS
+───────────────────────────────────────── */
+.petal-layer {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none; overflow: hidden;
+}
+.petal {
+  position: absolute;
+  top: -60px;
+  width: 14px; height: 14px;
+  border-radius: 0 50% 50% 50%;
+  opacity: .55;
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: .55; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ─────────────────────────────────────────
+   TYPOGRAPHY HELPERS
+───────────────────────────────────────── */
+h1, h2, h3, .serif {
+  font-family: 'Fraunces', serif;
+  color: var(--rose-deep);
+}
+.arabic { font-family: 'Amiri', serif; direction: rtl; }
+
+/* ─────────────────────────────────────────
+   NAV DOT
+───────────────────────────────────────── */
+.nav-dots {
+  position: fixed; right: 18px; top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.nav-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--blush);
+  border: 2px solid var(--rose);
+  cursor: pointer;
+  transition: background .3s, transform .3s;
+}
+.nav-dot:hover, .nav-dot.active {
+  background: var(--rose-deep);
+  transform: scale(1.4);
+}
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+.hero {
+  min-height: 100svh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 60px 24px 50px;
+  position: relative;
+}
+
+/* animated ribbon banner at top */
+.hero-ribbon {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--blush), var(--gold), var(--rose-deep), var(--gold), var(--blush));
+  background-size: 300% 100%;
+  animation: shimmer 4s ease infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-emoji-row {
+  font-size: 1.8rem;
+  margin-bottom: 18px;
+  animation: bounce-in .8s cubic-bezier(.36,.07,.19,.97) both;
+  letter-spacing: 6px;
+}
+@keyframes bounce-in {
+  0%  { opacity: 0; transform: scale(.4); }
+  60% { transform: scale(1.1); }
+  100%{ opacity: 1; transform: scale(1); }
+}
+
+.hero h1 {
+  font-size: clamp(2.8rem, 9vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  animation: fade-up .9s ease both;
+  animation-delay: .15s;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+
+.hero .sub {
+  max-width: 440px;
+  margin: 20px auto 0;
+  color: var(--plum-soft);
+  font-size: 1.05rem;
+  animation: fade-up .9s ease both;
+  animation-delay: .3s;
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero .ar-block {
+  margin-top: 26px;
+  animation: fade-up .9s ease both;
+  animation-delay: .45s;
+}
+.hero .ar-main {
+  font-family: 'Amiri', serif;
+  font-size: 1.75rem;
+  color: var(--rose-deep);
+  direction: rtl;
+  display: block;
+}
+.hero .ar-trans {
+  font-family: 'Nunito', sans-serif;
+  font-size: .82rem;
+  color: var(--plum-soft);
+  font-style: italic;
+  margin-top: 4px;
+  direction: ltr;
+}
+
+.scroll-hint {
+  margin-top: 60px;
+  font-size: .84rem;
+  color: var(--plum-soft);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  animation: bob 2.4s ease-in-out infinite;
+}
+@keyframes bob {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(9px); }
+}
+
+/* floating stickers */
+.sticker {
+  position: absolute;
+  width: 72px;
+  filter: drop-shadow(0 6px 12px rgba(62,45,50,.2));
+  animation: float var(--dur, 5s) ease-in-out infinite;
+  animation-delay: var(--del, 0s);
+}
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(var(--rot,0deg)); }
+  50%     { transform: translateY(-14px) rotate(var(--rot,0deg)); }
+}
+
+/* ─────────────────────────────────────────
+   SECTION WRAPPER
+───────────────────────────────────────── */
+.wrap { max-width: 660px; margin: 0 auto; padding: 0 24px; }
+.section-title {
+  text-align: center;
+  font-size: 1.85rem;
+  margin-bottom: 48px;
+  position: relative;
+}
+.section-title::after {
+  content: "";
+  display: block;
+  width: 48px; height: 3px;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, var(--rose), var(--gold));
+  border-radius: 4px;
+}
+
+/* ─────────────────────────────────────────
+   LETTER / DIARY
+───────────────────────────────────────── */
+.letter-section { padding: 80px 24px; }
+
+.letter {
+  background: var(--paper);
+  border: 1px solid rgba(62,45,50,.07);
+  border-radius: 2px;
+  padding: 48px 40px;
+  max-width: 580px; margin: 0 auto;
+  transform: rotate(-0.5deg);
+  box-shadow: 0 22px 50px -24px rgba(62,45,50,.38), 0 2px 0 rgba(62,45,50,.04);
+  position: relative;
+}
+/* ruled lines */
+.letter::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    transparent, transparent 31px, rgba(209,138,155,.18) 32px
+  );
+  border-radius: 2px;
+  pointer-events: none;
+}
+/* colour top stripe */
+.letter::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--rose), var(--gold), var(--rose));
+  opacity: .7;
+}
+.letter-inner { position: relative; z-index: 1; }
+.letter h2 { font-size: 1.7rem; margin-bottom: 20px; }
+.letter p { margin-bottom: 16px; font-size: 1.02rem; color: var(--plum); }
+.letter p.placeholder {
+  color: var(--plum-soft); font-style: italic;
+  border-left: 2px solid var(--blush);
+  padding-left: 14px;
+}
+.letter .sign {
+  font-family: 'Fraunces', serif;
+  font-style: italic; font-size: 1.4rem;
+  color: var(--rose-deep); margin-top: 26px;
+}
+
+/* ─────────────────────────────────────────
+   TRAITS GRID
+───────────────────────────────────────── */
+.traits-section { padding: 80px 24px; }
+
+.trait-grid {
+  max-width: 580px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+@media(max-width:520px){ .trait-grid { grid-template-columns: 1fr; } }
+
+.trait-card {
+  background: var(--paper);
+  border-radius: 18px;
+  padding: 26px 22px;
+  box-shadow: 0 8px 28px -14px rgba(62,45,50,.32);
+  transition: transform .3s, box-shadow .3s;
+  cursor: default;
+}
+.trait-card:hover {
+  transform: translateY(-6px) rotate(.6deg);
+  box-shadow: 0 18px 40px -16px rgba(62,45,50,.38);
+}
+.trait-card .icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  display: block;
+}
+.trait-card h3 {
+  font-size: 1.05rem; margin-bottom: 7px;
+  color: var(--rose-deep);
+}
+.trait-card p { font-size: .93rem; color: var(--plum-soft); }
+
+/* ─────────────────────────────────────────
+   PHOTOS / POLAROID STRIP
+───────────────────────────────────────── */
+.photos-section { padding: 80px 24px; overflow: hidden; }
+
+.polaroid-strip {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  padding: 24px 8px 40px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--blush) transparent;
+}
+.polaroid-strip::-webkit-scrollbar { height: 5px; }
+.polaroid-strip::-webkit-scrollbar-thumb { background: var(--blush); border-radius: 99px; }
+
+.polaroid {
+  flex: 0 0 auto;
+  background: #fff;
+  padding: 13px 13px 48px;
+  box-shadow: 0 16px 40px -18px rgba(62,45,50,.42);
+  scroll-snap-align: start;
+  transition: transform .3s;
+  width: 220px;
+}
+.polaroid:nth-child(odd)  { transform: rotate(-2deg); }
+.polaroid:nth-child(even) { transform: rotate(2.2deg); margin-top: 20px; }
+.polaroid:hover           { transform: rotate(0deg) scale(1.04); z-index: 2; }
+
+.polaroid img {
+  width: 100%; height: 190px;
+  object-fit: cover; object-position: top;
+  display: block;
+}
+.polaroid .cap {
+  text-align: center;
+  font-family: 'Fraunces', serif;
+  font-style: italic; font-size: .9rem;
+  color: var(--plum-soft);
+  margin-top: 14px; padding: 0 4px;
+}
+
+/* ─────────────────────────────────────────
+   SURPRISE BUTTON
+───────────────────────────────────────── */
+.surprise-section {
+  padding: 80px 24px 100px;
+  text-align: center;
+}
+.surprise-section p.lead {
+  color: var(--plum-soft); max-width: 400px; margin: 0 auto 36px;
+}
+
+.seal-btn {
+  width: 128px; height: 128px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #E8A8B8, var(--rose-deep));
+  color: #fff;
+  border: none;
+  font-family: 'Fraunces', serif;
+  font-size: 1rem; font-style: italic;
+  cursor: pointer;
+  box-shadow: 0 18px 36px -12px rgba(176,90,110,.55);
+  transition: transform .25s ease, box-shadow .25s ease;
+  position: relative;
+}
+.seal-btn:hover  { transform: scale(1.06) rotate(-2deg); }
+.seal-btn:active { transform: scale(.96); }
+.seal-btn::after {
+  content: "🎁";
+  position: absolute; top: -16px; right: -12px;
+  font-size: 1.6rem;
+  animation: wiggle 1.8s ease-in-out infinite;
+}
+@keyframes wiggle {
+  0%,100% { transform: rotate(-10deg); }
+  50%     { transform: rotate(10deg); }
+}
+
+.reveal-box {
+  max-width: 500px; margin: 34px auto 0;
+  background: var(--paper);
+  border-radius: 4px; padding: 32px 28px;
+  box-shadow: 0 20px 48px -22px rgba(62,45,50,.38);
+  display: none; transform: rotate(.4deg);
+}
+.reveal-box.show {
+  display: block;
+  animation: pop .4s cubic-bezier(.22,.61,.36,1) both;
+}
+@keyframes pop {
+  from { opacity: 0; transform: translateY(16px) rotate(.4deg) scale(.95); }
+  to   { opacity: 1; transform: translateY(0)    rotate(.4deg) scale(1); }
+}
+.reveal-box .gift-emoji { font-size: 3rem; margin-bottom: 10px; display: block; }
+.reveal-box p { margin-bottom: 10px; }
+.reveal-box .placeholder { color: var(--plum-soft); font-style: italic; }
+.reveal-box .ar-gift {
+  font-family: 'Amiri', serif; direction: rtl;
+  font-size: 1.3rem; color: var(--rose-deep);
+  margin-top: 14px; display: block;
+}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+footer {
+  padding: 60px 24px 80px;
+  text-align: center;
+}
+footer .dua {
+  font-family: 'Amiri', serif; direction: rtl;
+  font-size: 1.5rem; color: var(--rose-deep);
+  margin-bottom: 8px; display: block;
+}
+footer .dua-trans {
+  font-size: .82rem; color: var(--plum-soft);
+  font-style: italic; margin-bottom: 22px; display: block;
+}
+footer .closing { color: var(--plum-soft); font-size: .95rem; }
+footer .heart { font-size: 1.5rem; margin-top: 16px; display: block; }
+footer .cat-wave {
+  font-size: 2.5rem; margin-top: 10px; display: block;
+  animation: wave .9s ease-in-out infinite alternate;
+  transform-origin: bottom right;
+}
+@keyframes wave {
+  from { transform: rotate(-8deg); }
+  to   { transform: rotate(12deg); }
+}
+
+/* ─────────────────────────────────────────
+   MOBILE TWEAKS
+───────────────────────────────────────── */
+@media(max-width:480px){
+  .letter { padding: 32px 22px; }
+  .sticker { width: 64px !important; }
+  .nav-dots { display: none !important; }
+  .polaroid { width: 190px; }
+}
+
+/* ─────────────────────────────────────────
+   SCROLL REVEAL UTILITY
+───────────────────────────────────────── */
+.reveal-on-scroll {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal-on-scroll.visible {
+  opacity: 1; transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- ───── FLOATING PETALS ───── -->
+<div class="petal-layer" id="petals"></div>
+
+<!-- ───── NAV DOTS ───── -->
+<nav class="nav-dots" aria-label="Page sections">
+  <div class="nav-dot active" data-target="hero"     title="Top"></div>
+  <div class="nav-dot"        data-target="letter"   title="Letter"></div>
+  <div class="nav-dot"        data-target="traits"   title="Things I love"></div>
+  <div class="nav-dot"        data-target="photos"   title="Photos"></div>
+  <div class="nav-dot"        data-target="surprise" title="Surprise"></div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     SECTION 1 — HERO
+═══════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-ribbon"></div>
+
+  <!-- floating sticker decorations using the cute cats -->
+  <img src="images/sticker_0_1.png" alt="cat sticker" class="sticker" style="top:5%;left:10%;width:90px;--dur:5.2s;--del:0s;--rot:-8deg">
+  <img src="images/sticker_0_2.png" alt="cat sticker" class="sticker" style="top:8%;right:12%;width:100px;--dur:4.8s;--del:.6s;--rot:6deg">
+  <img src="images/sticker_1_0.png" alt="cat sticker" class="sticker" style="top:30%;left:5%;width:110px;--dur:6.1s;--del:.4s;--rot:-12deg">
+  <img src="images/sticker_2_2.png" alt="cat sticker" class="sticker" style="top:25%;right:5%;width:115px;--dur:5.5s;--del:.8s;--rot:15deg">
+  <img src="images/sticker_4_2.png" alt="cat sticker" class="sticker" style="bottom:16%;left:8%;width:95px;--dur:5.8s;--del:.3s;--rot:-4deg">
+  <img src="images/sticker_3_1.png" alt="cat sticker" class="sticker" style="bottom:20%;right:8%;width:85px;--dur:5s;--del:.9s;--rot:9deg">
+
+  <div class="hero-emoji-row" aria-hidden="true">🎉 🎀 🌸 🎁 🎊</div>
+
+  <h1>happy birthday,<br><em>Dimah</em> 🎀</h1>
+
+  <p class="sub">
+    I couldn't hand you anything this year, so I built you a page instead —
+    open it whenever you want a hug from far away.
+  </p>
+
+  <div class="hero ar-block">
+    <span class="ar-main">كل عام وأنتِ بخير يا ديمة 🌹</span>
+    <span class="ar-trans">kull 'aam wa anti bikhair, ya Dimah</span>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <span style="font-size:.8rem;letter-spacing:.05em">scroll down, there's more</span>
+    <span>↓</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SECTION 2 — LETTER
+═══════════════════════════════════════ -->
+<section class="letter-section" id="letter">
+  <div class="wrap">
+    <div class="letter reveal-on-scroll">
+      <div class="letter-inner">
+        <h2>a letter for you ✉️</h2>
+        <p>Dimah,</p>
+
+        <!-- ↓↓ SHUBH — write the real thing here ↓↓ -->
+        <p>
+          I know we don't always get to hang out as much as we'd like since we live so far apart, 
+          but I just wanted to say how much I value our friendship. You're one of my closest friends, 
+          and I can always count on you for a good laugh, amazing book recommendations, and 
+          listening to my random rants. 
+        </p>
+        <p>
+          Thank you for being such an awesome best friend. I'm so glad we met!
+        </p>
+
+        <p>
+          I wish I could've handed this to you in person, wrapped in something with
+          way too much ribbon on it, the way you like. Instead you get pixels and a
+          very sincere attempt at HTML. Hope it's enough for now — the real hug is
+          coming eventually. Insha'Allah.
+        </p>
+        <p>
+          May this year bring you every good thing you deserve — new books to dog-ear,
+          new obsessions to rave about at 2 am, new keychains for your bag, and every
+          golden-hour beach moment your camera roll can hold. 🌅
+        </p>
+
+        <p class="sign">— Shubh 🤍</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SECTION 3 — TRAITS GRID
+═══════════════════════════════════════ -->
+<section class="traits-section" id="traits">
+  <div class="wrap">
+    <h2 class="section-title serif reveal-on-scroll">things I love about you</h2>
+
+    <div class="trait-grid">
+
+      <div class="trait-card reveal-on-scroll" style="transition-delay:.05s">
+        <span class="icon">📖</span>
+        <h3>always mid-book</h3>
+        <p>
+          There's never a week without something open on your nightstand.
+          Hope this year brings a shelf full of new favourites — and margins
+          full of your thoughts.
+        </p>
+      </div>
+
+      <div class="trait-card reveal-on-scroll" style="transition-delay:.12s">
+        <span class="icon">🀄</span>
+        <h3>manga & manhwa enthusiast</h3>
+        <p>
+          <!-- ↓ swap in her current obsession ↓ -->
+          [Her current read] — you'll talk me into reading it eventually, we
+          both know it. I've already mentally set aside the weekend.
+        </p>
+      </div>
+
+      <div class="trait-card reveal-on-scroll" style="transition-delay:.18s">
+        <span class="icon">🌸</span>
+        <h3>the BL connoisseur</h3>
+        <p>
+          Your taste is impeccable and your recommendations always come with
+          a five-minute passionate defence. I appreciate the commitment to
+          quality.
+        </p>
+      </div>
+
+      <div class="trait-card reveal-on-scroll" style="transition-delay:.24s">
+        <span class="icon">🧸</span>
+        <h3>collector of tiny cute things</h3>
+        <p>
+          Plushies, keychains, anything small enough to hang off a bag strap —
+          if it's soft and adorable, you've already adopted it.
+        </p>
+      </div>
+
+      <div class="trait-card reveal-on-scroll" style="transition-delay:.30s">
+        <span class="icon">📸</span>
+        <h3>golden-hour girl</h3>
+        <p>
+          Your camera roll is 90% sunsets and you have the eye to prove it.
+          That beach series? Genuinely stunning. You could sell prints.
+        </p>
+      </div>
+
+      <div class="trait-card reveal-on-scroll" style="transition-delay:.36s">
+        <span class="icon">✨</span>
+        <h3>you make everything an occasion</h3>
+        <p>
+          Whatever the reason, you somehow turn it into something worth
+          remembering. Today it's your turn to be celebrated. 🎉
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SECTION 4 — PHOTO STRIP
+═══════════════════════════════════════ -->
+<section class="photos-section" id="photos">
+  <div class="wrap">
+    <h2 class="section-title serif reveal-on-scroll">proof you exist and you're wonderful 📷</h2>
+  </div>
+
+  <!-- horizontal scroll polaroid strip -->
+  <div class="polaroid-strip reveal-on-scroll" style="transition-delay:.1s">
+
+    <!-- PHOTO 1 — beach selfie -->
+    <div class="polaroid">
+      <img src="images/media_1789142168421.jpg" alt="beach selfie">
+      <p class="cap">[beach selfie — the one with the glasses tilted 🕶️]</p>
+    </div>
+
+    <!-- PHOTO 2 — sunset portrait -->
+    <div class="polaroid">
+      <img src="images/media_1789142174508.png" alt="sunset portrait">
+      <p class="cap">[the golden hour look — magazine-worthy]</p>
+    </div>
+
+    <!-- PHOTO 3 — city skyline beach -->
+    <div class="polaroid">
+      <img src="images/media_1789142194049.jpg" alt="city skyline beach">
+      <p class="cap">[skyline + floral abaya = iconic]</p>
+    </div>
+
+    <!-- PHOTO 4 — silhouette at sunset -->
+    <div class="polaroid">
+      <img src="images/media_1789142197778.png" alt="silhouette at sunset">
+      <p class="cap">[silhouette against the golden sky 🌊]</p>
+    </div>
+
+    <!-- PHOTO 5 — arms out at the shore -->
+    <div class="polaroid">
+      <img src="images/media_1789142201789.png" alt="arms out at the shore">
+      <p class="cap">["this is my ocean now" energy — we love it]</p>
+    </div>
+
+    <!-- PHOTO 6 — spare slot -->
+    <div class="polaroid">
+      <img src="images/sticker_1_2.png" alt="cute cat" style="object-fit: contain; padding: 20px; background: #fff;">
+      <p class="cap">[and a very judgemental cat for good measure]</p>
+    </div>
+
+  </div>
+
+  <p style="text-align:center;color:var(--plum-soft);font-size:.82rem;margin-top:8px;">
+    ← scroll to see more →
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SECTION 5 — SURPRISE
+═══════════════════════════════════════ -->
+<section class="surprise-section" id="surprise">
+  <div class="wrap">
+    <h2 class="section-title serif reveal-on-scroll">one more thing 🎁</h2>
+    <p class="lead reveal-on-scroll" style="transition-delay:.1s">
+      Go on — you know you want to click it.
+    </p>
+
+    <button class="seal-btn reveal-on-scroll" id="surpriseBtn"
+            style="transition-delay:.18s"
+            aria-label="Click for a surprise">
+      click me
+    </button>
+
+    <div class="reveal-box" id="revealBox" role="region" aria-live="polite">
+      <span class="gift-emoji">🎀</span>
+      <p style="font-family:'Fraunces',serif;font-size:1.2rem;color:var(--rose-deep);font-style:italic;">
+        a virtual gift, just for you:
+      </p>
+      <p>
+        A lifelong promise to be your designated rant-listener, 
+        completely judgment-free, whether it's about work, life, 
+        or your latest BL obsession. Best friends only! 🤝
+      </p>
+      <span class="ar-gift">وكل عام وأنتِ بألف خير 🌹</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════ -->
+<footer>
+  <div class="wrap">
+    <span class="dua">بارك الله فيكِ يا ديمة</span>
+    <span class="dua-trans">Barakallahu feeki ya Dimah — may Allah bless you, Dimah</span>
+    <p class="closing">
+      made with far too many hours of HTML, genuine affection,<br>
+      and one very sincere wish for you to have a beautiful year. 🤍
+    </p>
+    <span class="heart">✦ — Shubh — ✦</span>
+    <span class="cat-wave" aria-hidden="true">🐱</span>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════ -->
+<script>
+/* ──── PETALS ──── */
+(function spawnPetals(){
+  const layer = document.getElementById('petals');
+  const colors = ['#F2C4CE','#D98A9B','#EDE0CF','#C9A15A','#A8B5A0'];
+  for(let i = 0; i < 22; i++){
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `
+      left: ${Math.random()*100}vw;
+      width: ${10 + Math.random()*10}px;
+      height: ${10 + Math.random()*10}px;
+      background: ${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration: ${7 + Math.random()*10}s;
+      animation-delay: ${-Math.random()*12}s;
+      opacity: ${.3 + Math.random()*.4};
+    `;
+    layer.appendChild(p);
+  }
+})();
+
+/* ──── SCROLL REVEAL ──── */
+const revealEls = document.querySelectorAll('.reveal-on-scroll');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: .12 });
+revealEls.forEach(el => io.observe(el));
+
+/* ──── NAV DOTS ──── */
+const sections = ['hero','letter','traits','photos','surprise'];
+const dots     = document.querySelectorAll('.nav-dot');
+
+dots.forEach((d,i) => {
+  d.addEventListener('click', () => {
+    document.getElementById(sections[i]).scrollIntoView({behavior:'smooth'});
+  });
+});
+
+const sectionEls = sections.map(id => document.getElementById(id));
+const dotObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      const idx = sectionEls.indexOf(e.target);
+      dots.forEach((d,i) => d.classList.toggle('active', i===idx));
+    }
+  });
+}, { threshold: .4 });
+sectionEls.forEach(el => dotObs.observe(el));
+
+/* ──── SURPRISE BUTTON ──── */
+document.getElementById('surpriseBtn').addEventListener('click', function(){
+  const box = document.getElementById('revealBox');
+  box.classList.toggle('show');
+
+  if(box.classList.contains('show')){
+    /* confetti burst */
+    const count = 180, defaults = { origin: { y: .65 } };
+    function fire(particleRatio, opts){
+      confetti(Object.assign({}, defaults, opts, {
+        particleCount: Math.floor(count * particleRatio)
+      }));
+    }
+    fire(.25, { spread: 26, startVelocity: 55, colors:['#F2C4CE','#D98A9B'] });
+    fire(.20, { spread: 60, colors:['#C9A15A','#EDE0CF'] });
+    fire(.35, { spread: 100, decay: .91, scalar: .8, colors:['#B05A6E','#A8B5A0'] });
+    fire(.10, { spread: 120, startVelocity: 25, decay: .92, scalar: 1.2 });
+    fire(.10, { spread: 120, startVelocity: 45, colors:['#F2C4CE','#C9A15A'] });
+  }
+});
+</script>
+
+</body>
+</html>
